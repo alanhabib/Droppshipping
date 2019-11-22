@@ -4,13 +4,21 @@
   "description": "git init - Create a new git repo git status - View the changes to your project code git add - Add files to staging area git commit - Creates a new commit with files from staging area git log - View recent commits",
   "main": "app.js",
   "dependencies": {
+    "@material-ui/core": "^4.6.1",
+    "@material-ui/icons": "^4.5.1",
+    "classnames": "^2.2.6",
     "install": "^0.12.2",
+    "jss": "^10.0.0",
+    "jss-preset-default": "^10.0.0",
     "npm": "^6.9.0",
     "parcel-bundler": "^1.12.3",
-    "react": "^16.8.6",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
     "react-dom": "^16.8.6",
+    "react-jss": "^10.0.0",
     "react-router-dom": "^5.0.0",
-    "sass": "^1.20.1"
+    "sass": "^1.20.1",
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
