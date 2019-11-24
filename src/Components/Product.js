@@ -18,133 +18,51 @@ import Button from "@material-ui/core/Button";
 import classNames from "classnames";
 import Container from "@material-ui/core/Container";
 import PropTypes from "prop-types";
-
-const styles = theme => ({
-  "@global": {
-    body: {
-      backgroundColor: theme.palette.common.white,
-      position: "relative"
-    },
-    ul: {
-      margin: 0,
-      padding: 0
-    },
-    li: {
-      listStyle: "none"
-    }
-  },
-  root: {
-    display: "block",
-    minHeight: "100vh",
-    position: "relative"
-  },
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`
-  },
-  toolbar: {
-    flexWrap: "wrap"
-  },
-  toolbarTitle: {
-    flexGrow: 1
-  },
-  link: {
-    margin: theme.spacing(1, 1.5)
-  },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6)
-  },
-  cardHeader: {
-    backgroundColor: theme.palette.grey[200],
-    position: "relative",
-    width: "100%"
-  },
-  cardPricing: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: 18
-  },
-  container: {
-    flexGrow: 1
-  },
-  footer: {
-    // padding: theme.spacing(2),
-    // marginTop: "auto",
-    backgroundColor: "white",
-    borderTop: `1px solid ${theme.palette.divider}`,
-    // marginTop: theme.spacing(8),
-    padding: theme.spacing(6, 0),
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-    textAlign: "center"
-    // paddingTop: theme.spacing(3),
-    // paddingBottom: theme.spacing(3),
-    // [theme.breakpoints.up("sm")]: {
-    //   paddingTop: theme.spacing(6),
-    //   paddingBottom: theme.spacing(6)
-    // }
-  }
-});
+import "./Product.scss";
 
 class Product extends Component {
   render() {
-    const { classes } = this.props;
     const image = require("../../public/img/product-1.png");
     const { id, title, img, price, inCart } = this.props;
     return (
       <ProductWrapper>
-        {/* <Container
-          spacing={6}
-          className={classes.container}
-          maxWidth="xs"
-          component="main"
-        > */}
-        <Card className="card">
-          <ProductConsumer>
-            {value => (
-              <CardContent
-                onClick={() => value.handleDetail(id)}
-                className="img-container"
+        <ProductConsumer>
+          {value => (
+            <div
+              onClick={() => value.handleDetail(id)}
+              className={classNames("img-container", "card")}
+            >
+              <Link to="/details">
+                <img
+                  className="card-img-top"
+                  style={{ width: "100%" }}
+                  src={image}
+                  alt={"product"}
+                />
+              </Link>
+              <button
+                className="cart-btn"
+                onClick={() => {
+                  value.addToCart(id);
+                  value.openModal(id);
+                }}
+                disabled={inCart ? true : false}
               >
-                <Link to="/details">
-                  <img
-                    className="card-img-top"
-                    style={{ width: "100%" }}
-                    src={image}
-                    alt={"product"}
-                  />
-                </Link>
-                <button
-                  className="cart-btn"
-                  onClick={() => {
-                    value.addToCart(id);
-                    value.openModal(id);
-                  }}
-                  disabled={inCart ? true : false}
-                >
-                  {inCart ? (
-                    <p disabled>"in Cart"</p>
-                  ) : (
-                    <Grid item xs={8}>
-                      <AddShoppingCartIcon />
-                    </Grid>
-                  )}
-                </button>
-              </CardContent>
-            )}
-          </ProductConsumer>
+                {inCart ? <p disabled>"in Cart"</p> : <AddShoppingCartIcon />}
+              </button>
+            </div>
+          )}
+        </ProductConsumer>
 
-          <div className={classNames(classes.cardPricing, "card-footer")}>
-            <p>{title}</p>
-            <p style={{ display: "flex" }}>
-              <span>
-                <EuroSymbolIcon />
-              </span>
-              {price}
-            </p>
-          </div>
-        </Card>
+        <div className="card-footer">
+          <p>{title}</p>
+          <p style={{ display: "flex" }}>
+            <span>
+              <EuroSymbolIcon />
+            </span>
+            {price}
+          </p>
+        </div>
         {/* </Container> */}
       </ProductWrapper>
     );
@@ -163,13 +81,16 @@ Product.propTypes = {
 
 const ProductWrapper = styled.div`
   .card {
-    border-color: transparent;
-    transition: all 1s linear;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: space-between;
+    flex: 0 1 calc(25% - 1em);
+    box-sizing: border-box;
+    // margin: 1rem 0.25em;
+    // border-color: transparent;
+    // transition: all 1s linear;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: center;
+    // align-content: space-between;
     margin: 10px;
   }
   .card-footer {
@@ -222,6 +143,16 @@ const ProductWrapper = styled.div`
   .cart-btn:hover {
     color: blue;
   }
+  @media screen and (min-width: 40em) {
+    .card {
+      flex: 0 1 calc(50% - 1em);
+    }
+  }
+  @media screen and (min-width: 60em) {
+    .card {
+      flex: 0 1 calc(25% - 1em);
+    }
+  }
 `;
 
-export default withStyles(styles)(Product);
+export default Product;

@@ -16,6 +16,7 @@ import Title from "./Title";
 import { ProductConsumer } from "../context";
 import PropTypes from "prop-types";
 import { Slide } from "@material-ui/core";
+import styled from "styled-components";
 
 function Copyright() {
   return (
@@ -43,11 +44,6 @@ const styles = theme => ({
     li: {
       listStyle: "none"
     }
-  },
-  root: {
-    // display: "block",
-    minHeight: "100vh",
-    position: "relative"
   },
   appBar: {
     borderBottom: `1px solid ${theme.palette.divider}`
@@ -124,7 +120,7 @@ class ProductList extends Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div style={{ position: "relative" }}>
         {/* Hero unit */}
         <Container
           maxWidth="sm"
@@ -152,27 +148,29 @@ class ProductList extends Component {
           </Typography>
         </Container>
         {/* End hero unit */}
-        <div style={{ display: "flex" }}>
-          <ProductConsumer>
-            {value => {
-              return value.products.map(product => {
-                console.log("product", product);
-                return (
-                  <Product
-                    key={product.id}
-                    price={product.price}
-                    inCart={product.inCart}
-                    img={product.img}
-                    id={product.id}
-                    title={product.title}
-                  />
-                );
-              });
-            }}
-          </ProductConsumer>
-        </div>
+        <ProductWrapper>
+          <div className="cardsContainer">
+            <ProductConsumer>
+              {value => {
+                return value.products.map(product => {
+                  console.log("product", product);
+                  return (
+                    <Product
+                      key={product.id}
+                      price={product.price}
+                      inCart={product.inCart}
+                      img={product.img}
+                      id={product.id}
+                      title={product.title}
+                    />
+                  );
+                });
+              }}
+            </ProductConsumer>
+          </div>
+        </ProductWrapper>
         {/* Footer */}
-        <footer className={classes.footer}>
+        {/* <footer className={classes.footer}>
           <Container maxWidth="sm">
             <Grid container spacing={0} justify="space-evenly">
               {footers.map(footer => (
@@ -200,11 +198,34 @@ class ProductList extends Component {
               <Copyright />
             </Box>
           </Container>
-        </footer>
+        </footer> */}
         {/* End footer */}
       </div>
     );
   }
 }
+
+const ProductWrapper = styled.div`
+  .cardsContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: flex-start;
+    // align-content: flex-start;
+    // align-items: flex-start;
+    // background: #212121;
+    // font-family: sans-serif;
+  }
+  @media screen and (min-width: 40em) {
+    .cardsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+`;
 
 export default withStyles(styles)(ProductList);

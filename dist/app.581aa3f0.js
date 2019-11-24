@@ -49425,7 +49425,79 @@ var define;
 	}
 }());
 
-},{}],"img/product-1.png":[function(require,module,exports) {
+},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../src/Components/Product.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"img/product-1.png":[function(require,module,exports) {
 module.exports = "/product-1.0119959d.png";
 },{}],"../src/Components/Product.js":[function(require,module,exports) {
 "use strict";
@@ -49475,12 +49547,14 @@ var _Container = _interopRequireDefault(require("@material-ui/core/Container"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+require("./Product.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  .card {\n    border-color: transparent;\n    transition: all 1s linear;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-content: space-between;\n    margin: 10px;\n  }\n  .card-footer {\n    background: transparent;\n    border-top: transparent;\n    transition: all 1s linear;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    justify-content: space-between;\n    align-content: space-between;\n    padding: 0 10px;\n  }\n  &:hover {\n    .card {\n      border: 0.04rem solid rgba(0, 0, 0, 0.2);\n      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);\n    }\n    .card-footer {\n      background: rgba(247, 247, 247);\n    }\n  }\n  .img-container {\n    position: relative;\n    overflow: hidden;\n    width: 100%;\n  }\n  .card-img-top {\n    transition: all 1s linear;\n  }\n  .img-container:hover .card-img-top {\n    transform: scale(1.2);\n  }\n  .cart-btn {\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    padding: 0.2rem;\n    background: lightblue;\n    color: white;\n    font-size: 1.4rem;\n    border-radius: 0.5rem 0 0 0;\n    transform: translate(100%);\n    transition: all 1s linear;\n  }\n  .img-container:hover .cart-btn {\n    transform: translate(0, 0);\n  }\n  .cart-btn:hover {\n    color: blue;\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  .card {\n    flex: 0 1 calc(25% - 1em);\n    box-sizing: border-box;\n    // margin: 1rem 0.25em;\n    // border-color: transparent;\n    // transition: all 1s linear;\n    // display: flex;\n    // flex-direction: row;\n    // flex-wrap: wrap;\n    // justify-content: center;\n    // align-content: space-between;\n    margin: 10px;\n  }\n  .card-footer {\n    background: transparent;\n    border-top: transparent;\n    transition: all 1s linear;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    justify-content: space-between;\n    align-content: space-between;\n    padding: 0 10px;\n  }\n  &:hover {\n    .card {\n      border: 0.04rem solid rgba(0, 0, 0, 0.2);\n      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);\n    }\n    .card-footer {\n      background: rgba(247, 247, 247);\n    }\n  }\n  .img-container {\n    position: relative;\n    overflow: hidden;\n    width: 100%;\n  }\n  .card-img-top {\n    transition: all 1s linear;\n  }\n  .img-container:hover .card-img-top {\n    transform: scale(1.2);\n  }\n  .cart-btn {\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    padding: 0.2rem;\n    background: lightblue;\n    color: white;\n    font-size: 1.4rem;\n    border-radius: 0.5rem 0 0 0;\n    transform: translate(100%);\n    transition: all 1s linear;\n  }\n  .img-container:hover .cart-btn {\n    transform: translate(0, 0);\n  }\n  .cart-btn:hover {\n    color: blue;\n  }\n  @media screen and (min-width: 40em) {\n    .card {\n      flex: 0 1 calc(50% - 1em);\n    }\n  }\n  @media screen and (min-width: 60em) {\n    .card {\n      flex: 0 1 calc(25% - 1em);\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -49509,76 +49583,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var styles = function styles(theme) {
-  return {
-    "@global": {
-      body: {
-        backgroundColor: theme.palette.common.white,
-        position: "relative"
-      },
-      ul: {
-        margin: 0,
-        padding: 0
-      },
-      li: {
-        listStyle: "none"
-      }
-    },
-    root: {
-      display: "block",
-      minHeight: "100vh",
-      position: "relative"
-    },
-    appBar: {
-      borderBottom: "1px solid ".concat(theme.palette.divider)
-    },
-    toolbar: {
-      flexWrap: "wrap"
-    },
-    toolbarTitle: {
-      flexGrow: 1
-    },
-    link: {
-      margin: theme.spacing(1, 1.5)
-    },
-    heroContent: {
-      padding: theme.spacing(8, 0, 6)
-    },
-    cardHeader: {
-      backgroundColor: theme.palette.grey[200],
-      position: "relative",
-      width: "100%"
-    },
-    cardPricing: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontSize: 18
-    },
-    container: {
-      flexGrow: 1
-    },
-    footer: {
-      // padding: theme.spacing(2),
-      // marginTop: "auto",
-      backgroundColor: "white",
-      borderTop: "1px solid ".concat(theme.palette.divider),
-      // marginTop: theme.spacing(8),
-      padding: theme.spacing(6, 0),
-      position: "absolute",
-      width: "100%",
-      bottom: 0,
-      textAlign: "center" // paddingTop: theme.spacing(3),
-      // paddingBottom: theme.spacing(3),
-      // [theme.breakpoints.up("sm")]: {
-      //   paddingTop: theme.spacing(6),
-      //   paddingBottom: theme.spacing(6)
-      // }
-
-    }
-  };
-};
-
 var Product =
 /*#__PURE__*/
 function (_Component) {
@@ -49593,8 +49597,6 @@ function (_Component) {
   _createClass(Product, [{
     key: "render",
     value: function render() {
-      var classes = this.props.classes;
-
       var image = require("../../public/img/product-1.png");
 
       var _this$props = this.props,
@@ -49603,14 +49605,12 @@ function (_Component) {
           img = _this$props.img,
           price = _this$props.price,
           inCart = _this$props.inCart;
-      return _react.default.createElement(ProductWrapper, null, _react.default.createElement(_Card.default, {
-        className: "card"
-      }, _react.default.createElement(_context.ProductConsumer, null, function (value) {
-        return _react.default.createElement(_CardContent.default, {
+      return _react.default.createElement(ProductWrapper, null, _react.default.createElement(_context.ProductConsumer, null, function (value) {
+        return _react.default.createElement("div", {
           onClick: function onClick() {
             return value.handleDetail(id);
           },
-          className: "img-container"
+          className: (0, _classnames.default)("img-container", "card")
         }, _react.default.createElement(_reactRouterDom.Link, {
           to: "/details"
         }, _react.default.createElement("img", {
@@ -49629,17 +49629,14 @@ function (_Component) {
           disabled: inCart ? true : false
         }, inCart ? _react.default.createElement("p", {
           disabled: true
-        }, "\"in Cart\"") : _react.default.createElement(_Grid.default, {
-          item: true,
-          xs: 8
-        }, _react.default.createElement(_AddShoppingCart.default, null))));
+        }, "\"in Cart\"") : _react.default.createElement(_AddShoppingCart.default, null)));
       }), _react.default.createElement("div", {
-        className: (0, _classnames.default)(classes.cardPricing, "card-footer")
+        className: "card-footer"
       }, _react.default.createElement("p", null, title), _react.default.createElement("p", {
         style: {
           display: "flex"
         }
-      }, _react.default.createElement("span", null, _react.default.createElement(_EuroSymbol.default, null)), price))));
+      }, _react.default.createElement("span", null, _react.default.createElement(_EuroSymbol.default, null)), price)));
     }
   }]);
 
@@ -49657,10 +49654,9 @@ Product.propTypes = {//   product: PropTypes.shape({
 
 var ProductWrapper = _styledComponents.default.div(_templateObject());
 
-var _default = (0, _styles.withStyles)(styles)(Product);
-
+var _default = Product;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/Card":"../node_modules/@material-ui/core/esm/Card/index.js","@material-ui/core/CardActions":"../node_modules/@material-ui/core/esm/CardActions/index.js","@material-ui/core/CardContent":"../node_modules/@material-ui/core/esm/CardContent/index.js","@material-ui/core/CardActionArea":"../node_modules/@material-ui/core/esm/CardActionArea/index.js","@material-ui/core/CardHeader":"../node_modules/@material-ui/core/esm/CardHeader/index.js","@material-ui/core/CardMedia":"../node_modules/@material-ui/core/esm/CardMedia/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../context":"../src/context.js","@material-ui/icons/AddShoppingCart":"../node_modules/@material-ui/icons/AddShoppingCart.js","@material-ui/icons/EuroSymbol":"../node_modules/@material-ui/icons/EuroSymbol.js","@material-ui/icons/StarBorder":"../node_modules/@material-ui/icons/StarBorder.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","classnames":"../node_modules/classnames/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","prop-types":"../node_modules/prop-types/index.js","../../public/img/product-1.png":"img/product-1.png"}],"../src/Components/Title.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@material-ui/core/Card":"../node_modules/@material-ui/core/esm/Card/index.js","@material-ui/core/CardActions":"../node_modules/@material-ui/core/esm/CardActions/index.js","@material-ui/core/CardContent":"../node_modules/@material-ui/core/esm/CardContent/index.js","@material-ui/core/CardActionArea":"../node_modules/@material-ui/core/esm/CardActionArea/index.js","@material-ui/core/CardHeader":"../node_modules/@material-ui/core/esm/CardHeader/index.js","@material-ui/core/CardMedia":"../node_modules/@material-ui/core/esm/CardMedia/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../context":"../src/context.js","@material-ui/icons/AddShoppingCart":"../node_modules/@material-ui/icons/AddShoppingCart.js","@material-ui/icons/EuroSymbol":"../node_modules/@material-ui/icons/EuroSymbol.js","@material-ui/icons/StarBorder":"../node_modules/@material-ui/icons/StarBorder.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","classnames":"../node_modules/classnames/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","prop-types":"../node_modules/prop-types/index.js","./Product.scss":"../src/Components/Product.scss","../../public/img/product-1.png":"img/product-1.png"}],"../src/Components/Title.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -80994,9 +80990,23 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _core = require("@material-ui/core");
 
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  .cardsContainer {\n    display: flex;\n    justify-content: space-between;\n    flex-wrap: wrap;\n    // display: flex;\n    // flex-direction: row;\n    // flex-wrap: wrap;\n    // justify-content: flex-start;\n    // align-content: flex-start;\n    // align-items: flex-start;\n    // background: #212121;\n    // font-family: sans-serif;\n  }\n  @media screen and (min-width: 40em) {\n    .cardsContainer {\n      display: flex;\n      flex-wrap: wrap;\n      justify-content: space-between;\n    }\n  }\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -81041,11 +81051,6 @@ var styles = function styles(theme) {
       li: {
         listStyle: "none"
       }
-    },
-    root: {
-      // display: "block",
-      minHeight: "100vh",
-      position: "relative"
     },
     appBar: {
       borderBottom: "1px solid ".concat(theme.palette.divider)
@@ -81119,7 +81124,9 @@ function (_Component) {
 
       var classes = this.props.classes;
       return _react.default.createElement("div", {
-        className: classes.root
+        style: {
+          position: "relative"
+        }
       }, _react.default.createElement(_Container.default, {
         maxWidth: "sm",
         component: "main",
@@ -81138,10 +81145,8 @@ function (_Component) {
         align: "center",
         color: "textSecondary",
         component: "p"
-      }, "Quickly build an effective pricing table for your potential customers with this layout. It's built with default Material-UI components with little customization.")), _react.default.createElement("div", {
-        style: {
-          display: "flex"
-        }
+      }, "Quickly build an effective pricing table for your potential customers with this layout. It's built with default Material-UI components with little customization.")), _react.default.createElement(ProductWrapper, null, _react.default.createElement("div", {
+        className: "cardsContainer"
       }, _react.default.createElement(_context.ProductConsumer, null, function (value) {
         return value.products.map(function (product) {
           console.log("product", product);
@@ -81154,45 +81159,19 @@ function (_Component) {
             title: product.title
           });
         });
-      })), _react.default.createElement("footer", {
-        className: classes.footer
-      }, _react.default.createElement(_Container.default, {
-        maxWidth: "sm"
-      }, _react.default.createElement(_Grid.default, {
-        container: true,
-        spacing: 0,
-        justify: "space-evenly"
-      }, footers.map(function (footer) {
-        return _react.default.createElement(_Grid.default, {
-          item: true,
-          xs: 6,
-          sm: 3,
-          key: footer.title
-        }, _react.default.createElement(_Typography.default, {
-          variant: "h6",
-          color: "textPrimary"
-        }, footer.title), _react.default.createElement("ul", null, footer.description.map(function (item) {
-          return _react.default.createElement("li", {
-            key: item
-          }, _react.default.createElement(_Link.default, {
-            href: "#",
-            variant: "subtitle1",
-            color: "textSecondary"
-          }, item));
-        })));
-      })), _react.default.createElement(_Box.default, {
-        mt: 5
-      }, _react.default.createElement(Copyright, null)))));
+      }))));
     }
   }]);
 
   return ProductList;
 }(_react.Component);
 
+var ProductWrapper = _styledComponents.default.div(_templateObject());
+
 var _default = (0, _styles.withStyles)(styles)(ProductList);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","@material-ui/core/Card":"../node_modules/@material-ui/core/esm/Card/index.js","@material-ui/core/CardActions":"../node_modules/@material-ui/core/esm/CardActions/index.js","@material-ui/core/CardContent":"../node_modules/@material-ui/core/esm/CardContent/index.js","@material-ui/core/CardHeader":"../node_modules/@material-ui/core/esm/CardHeader/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","@material-ui/icons/StarBorder":"../node_modules/@material-ui/icons/StarBorder.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/Link":"../node_modules/@material-ui/core/esm/Link/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","@material-ui/core/Box":"../node_modules/@material-ui/core/esm/Box/index.js","./Product":"../src/Components/Product.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","./Title":"../src/Components/Title.js","../context":"../src/context.js","prop-types":"../node_modules/prop-types/index.js","@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","../../public/img/product-1.png":"img/product-1.png"}],"../src/Components/Button.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","@material-ui/core/Card":"../node_modules/@material-ui/core/esm/Card/index.js","@material-ui/core/CardActions":"../node_modules/@material-ui/core/esm/CardActions/index.js","@material-ui/core/CardContent":"../node_modules/@material-ui/core/esm/CardContent/index.js","@material-ui/core/CardHeader":"../node_modules/@material-ui/core/esm/CardHeader/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","@material-ui/icons/StarBorder":"../node_modules/@material-ui/icons/StarBorder.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/Link":"../node_modules/@material-ui/core/esm/Link/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","@material-ui/core/Box":"../node_modules/@material-ui/core/esm/Box/index.js","./Product":"../src/Components/Product.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","./Title":"../src/Components/Title.js","../context":"../src/context.js","prop-types":"../node_modules/prop-types/index.js","@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../public/img/product-1.png":"img/product-1.png"}],"../src/Components/Button.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -81530,7 +81509,679 @@ function CartList(_ref) {
     });
   }));
 }
-},{"react":"../node_modules/react/index.js","./CartItem":"../src/Components/Cart/CartItem.js"}],"../src/Components/Cart/CartTotals.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./CartItem":"../src/Components/Cart/CartItem.js"}],"../node_modules/react-async-script-loader/node_modules/hoist-non-react-statics/index.js":[function(require,module,exports) {
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+'use strict';
+
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    arguments: true,
+    arity: true
+};
+
+var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+
+module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+        var keys = Object.getOwnPropertyNames(sourceComponent);
+
+        /* istanbul ignore else */
+        if (isGetOwnPropertySymbolsAvailable) {
+            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        }
+
+        for (var i = 0; i < keys.length; ++i) {
+            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
+                try {
+                    targetComponent[keys[i]] = sourceComponent[keys[i]];
+                } catch (error) {
+
+                }
+            }
+        }
+    }
+
+    return targetComponent;
+};
+
+},{}],"../node_modules/react-async-script-loader/lib/utils.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var isDefined = exports.isDefined = function isDefined(val) {
+  return val != null;
+};
+var isFunction = exports.isFunction = function isFunction(val) {
+  return typeof val === 'function';
+};
+var noop = exports.noop = function noop(_) {};
+
+var newScript = exports.newScript = function newScript(src) {
+  return function (cb) {
+    var script = document.createElement('script');
+    script.src = src;
+    script.addEventListener('load', function () {
+      return cb(null, src);
+    });
+    script.addEventListener('error', function () {
+      return cb(true, src);
+    });
+    document.body.appendChild(script);
+    return script;
+  };
+};
+
+var keyIterator = function keyIterator(cols) {
+  var keys = Object.keys(cols);
+  var i = -1;
+  return {
+    next: function next() {
+      i++; // inc
+      if (i >= keys.length) return null;else return keys[i];
+    }
+  };
+};
+
+// tasks should be a collection of thunk
+var parallel = exports.parallel = function parallel() {
+  for (var _len = arguments.length, tasks = Array(_len), _key = 0; _key < _len; _key++) {
+    tasks[_key] = arguments[_key];
+  }
+
+  return function (each) {
+    return function (cb) {
+      var hasError = false;
+      var successed = 0;
+      var ret = [];
+      tasks = tasks.filter(isFunction);
+
+      if (tasks.length <= 0) cb(null);else {
+        tasks.forEach(function (task, i) {
+          var thunk = task;
+          thunk(function (err) {
+            for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+              args[_key2 - 1] = arguments[_key2];
+            }
+
+            if (err) hasError = true;else {
+              // collect result
+              if (args.length <= 1) args = args[0];
+
+              ret[i] = args;
+              successed++;
+            }
+
+            if (isFunction(each)) each.call(null, err, args, i);
+
+            if (hasError) cb(true);else if (tasks.length === successed) {
+              cb(null, ret);
+            }
+          });
+        });
+      }
+    };
+  };
+};
+
+// tasks should be a collection of thunk
+var series = exports.series = function series() {
+  for (var _len3 = arguments.length, tasks = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+    tasks[_key3] = arguments[_key3];
+  }
+
+  return function (each) {
+    return function (cb) {
+      tasks = tasks.filter(function (val) {
+        return val != null;
+      });
+      var nextKey = keyIterator(tasks);
+      var nextThunk = function nextThunk() {
+        var key = nextKey.next();
+        var thunk = tasks[key];
+        if (Array.isArray(thunk)) thunk = parallel.apply(null, thunk).call(null, each);
+        return [+key, thunk]; // convert `key` to number
+      };
+      var key = void 0,
+          thunk = void 0;
+      var next = nextThunk();
+      key = next[0];
+      thunk = next[1];
+      if (thunk == null) return cb(null);
+
+      var ret = [];
+      var iterator = function iterator() {
+        thunk(function (err) {
+          for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+            args[_key4 - 1] = arguments[_key4];
+          }
+
+          if (args.length <= 1) args = args[0];
+          if (isFunction(each)) each.call(null, err, args, key);
+
+          if (err) cb(err);else {
+            // collect result
+            ret.push(args);
+
+            next = nextThunk();
+            key = next[0];
+            thunk = next[1];
+            if (thunk == null) return cb(null, ret); // finished
+            else iterator();
+          }
+        });
+      };
+      iterator();
+    };
+  };
+};
+},{}],"../node_modules/react-async-script-loader/lib/index.js":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.startLoadingScripts = startLoadingScripts;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _hoistNonReactStatics = require('hoist-non-react-statics');
+
+var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+
+var _utils = require('./utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var loadedScript = [];
+var pendingScripts = {};
+var failedScript = [];
+
+function startLoadingScripts(scripts) {
+  var onComplete = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _utils.noop;
+
+  // sequence load
+  var loadNewScript = function loadNewScript(src) {
+    if (loadedScript.indexOf(src) < 0) {
+      return function (taskComplete) {
+        var callbacks = pendingScripts[src] || [];
+        callbacks.push(taskComplete);
+        pendingScripts[src] = callbacks;
+        if (callbacks.length === 1) {
+          return (0, _utils.newScript)(src)(function (err) {
+            pendingScripts[src].forEach(function (cb) {
+              return cb(err, src);
+            });
+            delete pendingScripts[src];
+          });
+        }
+      };
+    }
+  };
+  var tasks = scripts.map(function (src) {
+    if (Array.isArray(src)) {
+      return src.map(loadNewScript);
+    } else return loadNewScript(src);
+  });
+
+  _utils.series.apply(undefined, _toConsumableArray(tasks))(function (err, src) {
+    if (err) {
+      failedScript.push(src);
+    } else {
+      if (Array.isArray(src)) {
+        src.forEach(addCache);
+      } else addCache(src);
+    }
+  })(function (err) {
+    removeFailedScript();
+    onComplete(err);
+  });
+}
+
+var addCache = function addCache(entry) {
+  if (loadedScript.indexOf(entry) < 0) {
+    loadedScript.push(entry);
+  }
+};
+
+var removeFailedScript = function removeFailedScript() {
+  if (failedScript.length > 0) {
+    failedScript.forEach(function (script) {
+      var node = document.querySelector('script[src=\'' + script + '\']');
+      if (node != null) {
+        node.parentNode.removeChild(node);
+      }
+    });
+
+    failedScript = [];
+  }
+};
+
+var scriptLoader = function scriptLoader() {
+  for (var _len = arguments.length, scripts = Array(_len), _key = 0; _key < _len; _key++) {
+    scripts[_key] = arguments[_key];
+  }
+
+  return function (WrappedComponent) {
+    var ScriptLoader = function (_Component) {
+      _inherits(ScriptLoader, _Component);
+
+      function ScriptLoader(props, context) {
+        _classCallCheck(this, ScriptLoader);
+
+        var _this = _possibleConstructorReturn(this, (ScriptLoader.__proto__ || Object.getPrototypeOf(ScriptLoader)).call(this, props, context));
+
+        _this.state = {
+          isScriptLoaded: false,
+          isScriptLoadSucceed: false
+        };
+
+        _this._isMounted = false;
+        return _this;
+      }
+
+      _createClass(ScriptLoader, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+          var _this2 = this;
+
+          this._isMounted = true;
+          startLoadingScripts(scripts, function (err) {
+            if (_this2._isMounted) {
+              _this2.setState({
+                isScriptLoaded: true,
+                isScriptLoadSucceed: !err
+              }, function () {
+                if (!err) {
+                  _this2.props.onScriptLoaded();
+                }
+              });
+            }
+          });
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          this._isMounted = false;
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          var props = _extends({}, this.props, this.state);
+
+          return _react2.default.createElement(WrappedComponent, props);
+        }
+      }]);
+
+      return ScriptLoader;
+    }(_react.Component);
+
+    ScriptLoader.propTypes = {
+      onScriptLoaded: _propTypes2.default.func
+    };
+    ScriptLoader.defaultProps = {
+      onScriptLoaded: _utils.noop
+    };
+
+
+    return (0, _hoistNonReactStatics2.default)(ScriptLoader, WrappedComponent);
+  };
+};
+
+exports.default = scriptLoader;
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","hoist-non-react-statics":"../node_modules/react-async-script-loader/node_modules/hoist-non-react-statics/index.js","./utils":"../node_modules/react-async-script-loader/lib/utils.js"}],"../node_modules/react-paypal-express-checkout/dist/index.js":[function(require,module,exports) {
+var define;
+var global = arguments[3];
+(function (global, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(['exports', 'react', 'react-dom', 'react-async-script-loader', 'prop-types'], factory);
+    } else if (typeof exports !== "undefined") {
+        factory(exports, require('react'), require('react-dom'), require('react-async-script-loader'), require('prop-types'));
+    } else {
+        var mod = {
+            exports: {}
+        };
+        factory(mod.exports, global.react, global.reactDom, global.reactAsyncScriptLoader, global.propTypes);
+        global.index = mod.exports;
+    }
+})(this, function (exports, _react, _reactDom, _reactAsyncScriptLoader, _propTypes) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _react2 = _interopRequireDefault(_react);
+
+    var _reactDom2 = _interopRequireDefault(_reactDom);
+
+    var _reactAsyncScriptLoader2 = _interopRequireDefault(_reactAsyncScriptLoader);
+
+    var _propTypes2 = _interopRequireDefault(_propTypes);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var _createClass = function () {
+        function defineProperties(target, props) {
+            for (var i = 0; i < props.length; i++) {
+                var descriptor = props[i];
+                descriptor.enumerable = descriptor.enumerable || false;
+                descriptor.configurable = true;
+                if ("value" in descriptor) descriptor.writable = true;
+                Object.defineProperty(target, descriptor.key, descriptor);
+            }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+            if (protoProps) defineProperties(Constructor.prototype, protoProps);
+            if (staticProps) defineProperties(Constructor, staticProps);
+            return Constructor;
+        };
+    }();
+
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        }
+
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
+    }
+
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
+
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        });
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+
+    var PaypalButton = function (_React$Component) {
+        _inherits(PaypalButton, _React$Component);
+
+        function PaypalButton(props) {
+            _classCallCheck(this, PaypalButton);
+
+            var _this = _possibleConstructorReturn(this, (PaypalButton.__proto__ || Object.getPrototypeOf(PaypalButton)).call(this, props));
+
+            window.React = _react2.default;
+            window.ReactDOM = _reactDom2.default;
+            _this.state = {
+                showButton: false
+            };
+            return _this;
+        }
+
+        _createClass(PaypalButton, [{
+            key: 'componentWillReceiveProps',
+            value: function componentWillReceiveProps(_ref) {
+                var isScriptLoaded = _ref.isScriptLoaded,
+                    isScriptLoadSucceed = _ref.isScriptLoadSucceed;
+
+                if (!this.state.show) {
+                    if (isScriptLoaded && !this.props.isScriptLoaded) {
+                        if (isScriptLoadSucceed) {
+                            this.setState({ showButton: true });
+                        } else {
+                            console.log('Cannot load Paypal script!');
+                            this.props.onError();
+                        }
+                    }
+                }
+            }
+        }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props = this.props,
+                    isScriptLoaded = _props.isScriptLoaded,
+                    isScriptLoadSucceed = _props.isScriptLoadSucceed;
+
+                if (isScriptLoaded && isScriptLoadSucceed) {
+                    this.setState({ showButton: true });
+                }
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _this2 = this;
+
+                var payment = function payment() {
+                    return paypal.rest.payment.create(_this2.props.env, _this2.props.client, Object.assign({
+                        transactions: [{ amount: { total: _this2.props.total, currency: _this2.props.currency } }]
+                    }, _this2.props.paymentOptions), {
+                        input_fields: {
+                            // any values other than null, and the address is not returned after payment execution.
+                            no_shipping: _this2.props.shipping
+                        }
+                    });
+                };
+
+                var onAuthorize = function onAuthorize(data, actions) {
+                    return actions.payment.execute().then(function (payment_data) {
+                        // console.log(`payment_data: ${JSON.stringify(payment_data, null, 1)}`)
+                        var payment = Object.assign({}, _this2.props.payment);
+                        payment.paid = true;
+                        payment.cancelled = false;
+                        payment.payerID = data.payerID;
+                        payment.paymentID = data.paymentID;
+                        payment.paymentToken = data.paymentToken;
+                        payment.returnUrl = data.returnUrl;
+                        // getting buyer's shipping address and email
+                        payment.address = payment_data.payer.payer_info.shipping_address;
+                        payment.email = payment_data.payer.payer_info.email;
+                        _this2.props.onSuccess(payment);
+                    });
+                };
+
+                var ppbtn = '';
+                if (this.state.showButton) {
+                    ppbtn = _react2.default.createElement(paypal.Button.react, {
+                        env: this.props.env,
+                        client: this.props.client,
+                        style: this.props.style,
+                        payment: payment,
+                        commit: true,
+                        onAuthorize: onAuthorize,
+                        onCancel: this.props.onCancel
+
+                        // "Error: Unrecognized prop: shipping" was caused by the next line
+                        // shipping={this.props.shipping}
+                    });
+                }
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    ppbtn
+                );
+            }
+        }]);
+
+        return PaypalButton;
+    }(_react2.default.Component);
+
+    PaypalButton.propTypes = {
+        currency: _propTypes2.default.string.isRequired,
+        total: _propTypes2.default.number.isRequired,
+        client: _propTypes2.default.object.isRequired,
+        style: _propTypes2.default.object
+    };
+
+    PaypalButton.defaultProps = {
+        paymentOptions: {},
+        env: 'sandbox',
+        // null means buyer address is returned in the payment execution response
+        shipping: null,
+        onSuccess: function onSuccess(payment) {
+            console.log('The payment was succeeded!', payment);
+        },
+        onCancel: function onCancel(data) {
+            console.log('The payment was cancelled!', data);
+        },
+        onError: function onError(err) {
+            console.log('Error loading Paypal script!', err);
+        }
+    };
+
+    exports.default = (0, _reactAsyncScriptLoader2.default)('https://www.paypalobjects.com/api/checkout.js')(PaypalButton);
+});
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-async-script-loader":"../node_modules/react-async-script-loader/lib/index.js","prop-types":"../node_modules/prop-types/index.js"}],"../node_modules/react-paypal-express-checkout/index.js":[function(require,module,exports) {
+module.exports = require('./dist/index');
+},{"./dist/index":"../node_modules/react-paypal-express-checkout/dist/index.js"}],"../src/Components/Cart/PayPalButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactPaypalExpressCheckout = _interopRequireDefault(require("react-paypal-express-checkout"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MyApp =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MyApp, _React$Component);
+
+  function MyApp() {
+    _classCallCheck(this, MyApp);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MyApp).apply(this, arguments));
+  }
+
+  _createClass(MyApp, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var onSuccess = function onSuccess(payment) {
+        // Congratulation, it came here means everything's fine!
+        console.log("The payment was succeeded!", payment);
+
+        _this.props.clearCart();
+
+        _this.props.history.push("/"); // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
+
+      };
+
+      var onCancel = function onCancel(data) {
+        // User pressed "cancel" or close Paypal's popup!
+        console.log("The payment was cancelled!", data); // You can bind the "data" object's value to your state or props or whatever here, please see below for sample returned data
+      };
+
+      var onError = function onError(err) {
+        // The main Paypal's script cannot be loaded or somethings block the loading of that script!
+        console.log("Error!", err); // Because the Paypal's main script is loaded asynchronously from "https://www.paypalobjects.com/api/checkout.js"
+        // => sometimes it may take about 0.5 second for everything to get set, or for the button to appear
+      };
+
+      var env = "sandbox"; // you can set here to 'production' for production
+
+      var currency = "USD"; // or you can set this value from your props or state
+      // let total = 1; // same as above, this is the total amount (based on currency) to be paid by using Paypal express checkout
+      // Document on Paypal's currency code: https://developer.paypal.com/docs/classic/api/currency_codes/
+
+      var client = {
+        sandbox: "Aa49Cve5Tyl4_qUit75Oku4Nh-hfuL2yGDMA2jxS5Ehhm_3o5YCkCGHoQqCvZfIrgwpDG_OEd0wOJB1M",
+        production: "YOUR-PRODUCTION-APP-ID"
+      }; // In order to get production's app-ID, you will have to send your app to Paypal for approval first
+      // For sandbox app-ID (after logging into your developer account, please locate the "REST API apps" section, click "Create App"):
+      //   => https://developer.paypal.com/docs/classic/lifecycle/sb_credentials/
+      // For production app-ID:
+      //   => https://developer.paypal.com/docs/classic/lifecycle/goingLive/
+      // NB. You can also have many Paypal express checkout buttons on page, just pass in the correct amount and they will work!
+
+      return _react.default.createElement(_reactPaypalExpressCheckout.default, {
+        env: env,
+        client: client,
+        currency: currency,
+        total: this.props.total,
+        onError: onError,
+        onSuccess: onSuccess,
+        onCancel: onCancel
+      });
+    }
+  }]);
+
+  return MyApp;
+}(_react.default.Component);
+
+exports.default = MyApp;
+},{"react":"../node_modules/react/index.js","react-paypal-express-checkout":"../node_modules/react-paypal-express-checkout/index.js"}],"../src/Components/Cart/CartTotals.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -81542,10 +82193,15 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _PayPalButton = _interopRequireDefault(require("./PayPalButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function CartTotals(_ref) {
-  var value = _ref.value;
+  var value = _ref.value,
+      history = _ref.history;
   var cartSubTotal = value.cartSubTotal,
       cartTax = value.cartTax,
       cartTotal = value.cartTotal,
@@ -81564,9 +82220,13 @@ function CartTotals(_ref) {
     onClick: function onClick() {
       return clearCart();
     }
-  }, "clear cart")), _react.default.createElement("h1", null, _react.default.createElement("span", null, "tax:"), _react.default.createElement("strong", null, "$", cartTax)), _react.default.createElement("h1", null, _react.default.createElement("span", null, "tax:"), _react.default.createElement("strong", null, "$", cartSubTotal)), _react.default.createElement("h1", null, _react.default.createElement("span", null, "total:"), _react.default.createElement("strong", null, "$", cartTotal))))));
+  }, "clear cart")), _react.default.createElement("h1", null, _react.default.createElement("span", null, "tax:"), _react.default.createElement("strong", null, "$", cartTax)), _react.default.createElement("h1", null, _react.default.createElement("span", null, "tax:"), _react.default.createElement("strong", null, "$", cartSubTotal)), _react.default.createElement("h1", null, _react.default.createElement("span", null, "total:"), _react.default.createElement("strong", null, "$", cartTotal)), _react.default.createElement(_PayPalButton.default, {
+    total: cartTotal,
+    clearCart: clearCart,
+    history: history
+  })))));
 }
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/Components/Cart/Cart.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./PayPalButton":"../src/Components/Cart/PayPalButton.js"}],"../src/Components/Cart/Cart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -81624,6 +82284,8 @@ function (_Component) {
   _createClass(Cart, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       return _react.default.createElement("section", null, _react.default.createElement(_context.ProductConsumer, null, function (value) {
         var cart = value.cart;
 
@@ -81634,7 +82296,8 @@ function (_Component) {
           }), _react.default.createElement(_CartColumns.default, null), _react.default.createElement(_CartList.default, {
             value: value
           }), _react.default.createElement(_CartTotals.default, {
-            value: value
+            value: value,
+            history: _this.props.history
           }));
         } else {
           return _react.default.createElement(_EmptyCart.default, null);
@@ -81814,74 +82477,7 @@ var AppRouter = function AppRouter() {
 
 var _default = AppRouter;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../Components/Header":"../src/Components/Header.js","../Components/EditExpensePage":"../src/Components/EditExpensePage.js","../Components/HelpPage":"../src/Components/HelpPage.js","../Components/NotFoundPage":"../src/Components/NotFoundPage.js","../Components/ProductList":"../src/Components/ProductList.js","../Components/Details":"../src/Components/Details.js","../Components/Cart":"../src/Components/Cart/Cart.js","../Components/Modal":"../src/Components/Modal.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../src/styles/styles.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../Components/Header":"../src/Components/Header.js","../Components/EditExpensePage":"../src/Components/EditExpensePage.js","../Components/HelpPage":"../src/Components/HelpPage.js","../Components/NotFoundPage":"../src/Components/NotFoundPage.js","../Components/ProductList":"../src/Components/ProductList.js","../Components/Details":"../src/Components/Details.js","../Components/Cart":"../src/Components/Cart/Cart.js","../Components/Modal":"../src/Components/Modal.js"}],"../src/styles/styles.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
