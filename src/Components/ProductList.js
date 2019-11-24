@@ -201,29 +201,4 @@ class ProductList extends Component {
   }
 }
 
-const ProductWrapper = styled.div`
-  .cardsContainer {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex: 1 0 auto;
-    // display: flex;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-    // justify-content: flex-start;
-    // align-content: flex-start;
-    // align-items: flex-start;
-    // background: #212121;
-    // font-family: sans-serif;
-  }
-  @media screen and (min-width: 40em) {
-    .cardsContainer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      width: 100%;
-    }
-  }
-`;
-
 export default withStyles(styles)(ProductList);

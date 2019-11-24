@@ -1,8 +1,9 @@
 .cardsContainer {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   flex: 1 0 auto;
+  justify-content: center;
+  align-items: space-between;
   // display: flex;
   // flex-direction: row;
   // flex-wrap: wrap;

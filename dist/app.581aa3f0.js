@@ -49553,18 +49553,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  .card {\n    flex: 0 1 calc(25% - 1em);\n    box-sizing: border-box;\n    // margin: 1rem 0.25em;\n    // border-color: transparent;\n    // transition: all 1s linear;\n    // display: flex;\n    // flex-direction: row;\n    // flex-wrap: wrap;\n    // justify-content: center;\n    // align-content: space-between;\n    margin: 10px;\n  }\n  .card-footer {\n    background: transparent;\n    border-top: transparent;\n    transition: all 1s linear;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    justify-content: space-between;\n    align-content: space-between;\n    padding: 0 10px;\n  }\n  &:hover {\n    .card {\n      border: 0.04rem solid rgba(0, 0, 0, 0.2);\n      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);\n    }\n    .card-footer {\n      background: rgba(247, 247, 247);\n    }\n  }\n  .img-container {\n    position: relative;\n    overflow: hidden;\n    width: 100%;\n  }\n  .card-img-top {\n    transition: all 1s linear;\n  }\n  .img-container:hover .card-img-top {\n    transform: scale(1.2);\n  }\n  .cart-btn {\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    padding: 0.2rem;\n    background: lightblue;\n    color: white;\n    font-size: 1.4rem;\n    border-radius: 0.5rem 0 0 0;\n    transform: translate(100%);\n    transition: all 1s linear;\n  }\n  .img-container:hover .cart-btn {\n    transform: translate(0, 0);\n  }\n  .cart-btn:hover {\n    color: blue;\n  }\n  @media screen and (min-width: 40em) {\n    .card {\n      flex: 0 1 calc(50% - 1em);\n    }\n  }\n  @media screen and (min-width: 60em) {\n    .card {\n      flex: 0 1 calc(25% - 1em);\n    }\n  }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49653,9 +49641,6 @@ Product.propTypes = {//   product: PropTypes.shape({
   //     inCart: PropTypes.bool
   //   }).isRequired
 };
-
-var ProductWrapper = _styledComponents.default.div(_templateObject());
-
 var _default = Product;
 exports.default = _default;
 },{"react":"../node_modules/react/index.js","@material-ui/core/Card":"../node_modules/@material-ui/core/esm/Card/index.js","@material-ui/core/CardActions":"../node_modules/@material-ui/core/esm/CardActions/index.js","@material-ui/core/CardContent":"../node_modules/@material-ui/core/esm/CardContent/index.js","@material-ui/core/CardActionArea":"../node_modules/@material-ui/core/esm/CardActionArea/index.js","@material-ui/core/CardHeader":"../node_modules/@material-ui/core/esm/CardHeader/index.js","@material-ui/core/CardMedia":"../node_modules/@material-ui/core/esm/CardMedia/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../context":"../src/context.js","@material-ui/icons/AddShoppingCart":"../node_modules/@material-ui/icons/AddShoppingCart.js","@material-ui/icons/EuroSymbol":"../node_modules/@material-ui/icons/EuroSymbol.js","@material-ui/icons/StarBorder":"../node_modules/@material-ui/icons/StarBorder.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","classnames":"../node_modules/classnames/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","prop-types":"../node_modules/prop-types/index.js","./Product.scss":"../src/Components/Product.scss","../../public/img/product-1.png":"img/product-1.png"}],"../src/Components/Title.js":[function(require,module,exports) {
@@ -81005,18 +80990,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  .cardsContainer {\n    display: flex;\n    justify-content: space-between;\n    flex-wrap: wrap;\n    flex: 1 0 auto;\n    // display: flex;\n    // flex-direction: row;\n    // flex-wrap: wrap;\n    // justify-content: flex-start;\n    // align-content: flex-start;\n    // align-items: flex-start;\n    // background: #212121;\n    // font-family: sans-serif;\n  }\n  @media screen and (min-width: 40em) {\n    .cardsContainer {\n      display: flex;\n      flex-wrap: wrap;\n      justify-content: space-between;\n      width: 100%;\n    }\n  }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -81192,8 +81165,6 @@ function (_Component) {
 
   return ProductList;
 }(_react.Component);
-
-var ProductWrapper = _styledComponents.default.div(_templateObject());
 
 var _default = (0, _styles.withStyles)(styles)(ProductList);
 
