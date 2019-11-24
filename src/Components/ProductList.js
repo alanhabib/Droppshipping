@@ -17,6 +17,7 @@ import { ProductConsumer } from "../context";
 import PropTypes from "prop-types";
 import { Slide } from "@material-ui/core";
 import styled from "styled-components";
+import "./ProductList.scss";
 
 function Copyright() {
   return (
@@ -120,7 +121,14 @@ class ProductList extends Component {
     const { classes } = this.props;
 
     return (
-      <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "relative",
+          flexDirection: "column",
+          display: "flex",
+          height: "100%"
+        }}
+      >
         {/* Hero unit */}
         <Container
           maxWidth="sm"
@@ -148,57 +156,45 @@ class ProductList extends Component {
           </Typography>
         </Container>
         {/* End hero unit */}
-        <ProductWrapper>
-          <div className="cardsContainer">
-            <ProductConsumer>
-              {value => {
-                return value.products.map(product => {
-                  console.log("product", product);
-                  return (
-                    <Product
-                      key={product.id}
-                      price={product.price}
-                      inCart={product.inCart}
-                      img={product.img}
-                      id={product.id}
-                      title={product.title}
-                    />
-                  );
-                });
-              }}
-            </ProductConsumer>
-          </div>
-        </ProductWrapper>
+        <div className="cardsContainer">
+          <ProductConsumer>
+            {value => {
+              return value.products.map(product => {
+                console.log("product", product);
+                return (
+                  <Product
+                    key={product.id}
+                    price={product.price}
+                    inCart={product.inCart}
+                    img={product.img}
+                    id={product.id}
+                    title={product.title}
+                  />
+                );
+              });
+            }}
+          </ProductConsumer>
+        </div>
         {/* Footer */}
-        {/* <footer className={classes.footer}>
-          <Container maxWidth="sm">
-            <Grid container spacing={0} justify="space-evenly">
-              {footers.map(footer => (
-                <Grid item xs={6} sm={3} key={footer.title}>
-                  <Typography variant="h6" color="textPrimary">
-                    {footer.title}
-                  </Typography>
-                  <ul>
-                    {footer.description.map(item => (
-                      <li key={item}>
-                        <Link
-                          href="#"
-                          variant="subtitle1"
-                          color="textSecondary"
-                        >
-                          {item}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </Grid>
-              ))}
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </Container>
-        </footer> */}
+        <footer className="footer">
+          <div className="footerContent">
+            {footers.map(footer => (
+              <div key={footer.title}>
+                {footer.title}
+                {footer.description.map(item => (
+                  <li key={item}>
+                    <Link href="#" variant="subtitle1">
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div>
+            <Copyright />
+          </div>
+        </footer>
         {/* End footer */}
       </div>
     );
@@ -210,6 +206,7 @@ const ProductWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    flex: 1 0 auto;
     // display: flex;
     // flex-direction: row;
     // flex-wrap: wrap;
@@ -224,6 +221,7 @@ const ProductWrapper = styled.div`
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      width: 100%;
     }
   }
 `;

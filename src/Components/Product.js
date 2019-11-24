@@ -25,12 +25,12 @@ class Product extends Component {
     const image = require("../../public/img/product-1.png");
     const { id, title, img, price, inCart } = this.props;
     return (
-      <ProductWrapper>
+      <div className="card">
         <ProductConsumer>
           {value => (
             <div
               onClick={() => value.handleDetail(id)}
-              className={classNames("img-container", "card")}
+              className="img-container"
             >
               <Link to="/details">
                 <img
@@ -63,8 +63,7 @@ class Product extends Component {
             {price}
           </p>
         </div>
-        {/* </Container> */}
-      </ProductWrapper>
+      </div>
     );
   }
 }
