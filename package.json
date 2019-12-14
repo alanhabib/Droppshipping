@@ -7,6 +7,7 @@
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
     "classnames": "^2.2.6",
+    "eslint": "^6.7.2",
     "install": "^0.12.2",
     "jss": "^10.0.0",
     "jss-preset-default": "^10.0.0",
@@ -26,7 +27,8 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "prettier": "^1.19.1"
   },
   "scripts": {
     "dev": "parcel public/index.html",
